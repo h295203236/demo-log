@@ -36,7 +36,7 @@
         </RollingFile>
 
         <!-- app audit log appender -->
-        <RollingFile name="auditAppender" fileName="${FILE_AUDIT_PATH}/audit.log" filePattern="${FILE_AUDIT_PATH}/audit.log.%d{yyyy-MM-dd}_%i.log.gz">
+        <RollingFile name="auditAppender" fileName="${FILE_AUDIT_PATH}/audit.json" filePattern="${FILE_AUDIT_PATH}/audit.json.%d{yyyy-MM-dd}_%i.log.gz">
             <PatternLayout pattern="${AUDIT_PATTERN}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>

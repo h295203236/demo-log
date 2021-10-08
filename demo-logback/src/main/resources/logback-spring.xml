@@ -42,13 +42,13 @@
 
     <!-- app audit log appender -->
     <appender name="auditAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${FILE_AUDIT_PATH}/audit.log</file>
+        <file>${FILE_AUDIT_PATH}/audit.json</file>
         <encoder>
             <pattern>${AUDIT_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${FILE_AUDIT_PATH}/audit.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <fileNamePattern>${FILE_AUDIT_PATH}/audit.json.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
