@@ -1,0 +1,3 @@
+# Project exclude paths
+/demo-log4j2/target/
+/demo-logback/target/

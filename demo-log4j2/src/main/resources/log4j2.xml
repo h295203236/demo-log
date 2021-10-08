@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration monitorInterval="5">
+
+    <!--变量配置-->
+    <Properties>
+        <!-- app container store root path -->
+        <property name="FILE_ROOT_PATH" value="./logs/log4j2" />
+        <!-- app runtime log store path -->
+        <property name="FILE_RUNTIME_PATH" value="${FILE_ROOT_PATH}/runtime" />
+        <!-- app audit log store path -->
+        <property name="FILE_AUDIT_PATH" value="${FILE_ROOT_PATH}/audit" />
+        <!-- app business log store path -->
+        <property name="FILE_BUSINESS_PATH" value="${FILE_ROOT_PATH}/bus" />
+        <!-- app runtime log pattern -->
+        <property name="RUNTIME_PATTERN" value="%d{yyyy-MM-dd'T'HH:mm:ss.SSSX} %-5level %logger Line:%-3L-%msg%n" />
+        <!-- app audit log pattern -->
+        <property name="AUDIT_PATTERN" value="%msg%n" />
+        <!-- app business log pattern -->
+        <property name="BUSINESS_PATTERN" value="%msg%n" />
+    </Properties>
+
+    <Appenders>
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${RUNTIME_PATTERN}"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!-- app runtime log appender -->
+        <RollingFile name="runtimeAppender" fileName="${FILE_RUNTIME_PATH}/application.log" filePattern="${FILE_RUNTIME_PATH}/application.log.%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${RUNTIME_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- app audit log appender -->
+        <RollingFile name="auditAppender" fileName="${FILE_AUDIT_PATH}/audit.log" filePattern="${FILE_AUDIT_PATH}/audit.log.%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${AUDIT_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- app xxx business log appender -->
+        <RollingFile name="xxxBusinessAppender" fileName="${FILE_BUSINESS_PATH}/xxxBus.log" filePattern="${FILE_BUSINESS_PATH}/xxxBus.log.%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${BUSINESS_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- audit logger -->
+        <Logger name="auditLogger" additivity="false">
+            <AppenderRef ref="auditAppender"/>
+        </Logger>
+        <!-- xxx business logger -->
+        <Logger name="xxxBusinessLogger" additivity="false">
+            <AppenderRef ref="xxxBusinessAppender"/>
+        </Logger>
+
+        <root level="info">
+            <AppenderRef ref="consoleAppender"/>
+            <AppenderRef ref="runtimeAppender"/>
+        </root>
+    </Loggers>
+
+</configuration>
