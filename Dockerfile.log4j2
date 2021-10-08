@@ -1,0 +1,12 @@
+FROM openjdk:8-slim-buster
+
+RUN ln -sf /usr/share/zoneinfo/Asia/ShangHai /etc/localtime
+
+RUN echo "Asia/Shanghai" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
+COPY demo-log4j2/target/*.jar app.jar
+
+EXPOSE 8080
+
+CMD java ${JAVA_OPTS} -jar app.jar
